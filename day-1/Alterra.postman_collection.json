@@ -1,0 +1,498 @@
+{
+	"info": {
+		"_postman_id": "2c0b7536-c382-4a33-8d5d-4b78aaaaa77a",
+		"name": "Alterra",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23313861"
+	},
+	"item": [
+		{
+			"name": "book",
+			"item": [
+				{
+					"name": "get all book",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://virtserver.swaggerhub.com/sepulsa/RentABook-API/1.0.0/book?p=1&rp=10&title=judul&isbn=1-234-5678-9101112-13",
+							"protocol": "https",
+							"host": [
+								"virtserver",
+								"swaggerhub",
+								"com"
+							],
+							"path": [
+								"sepulsa",
+								"RentABook-API",
+								"1.0.0",
+								"book"
+							],
+							"query": [
+								{
+									"key": "p",
+									"value": "1"
+								},
+								{
+									"key": "rp",
+									"value": "10"
+								},
+								{
+									"key": "title",
+									"value": "judul"
+								},
+								{
+									"key": "isbn",
+									"value": "1-234-5678-9101112-13"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get book by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://virtserver.swaggerhub.com/sepulsa/RentABook-API/1.0.0/book/1",
+							"protocol": "https",
+							"host": [
+								"virtserver",
+								"swaggerhub",
+								"com"
+							],
+							"path": [
+								"sepulsa",
+								"RentABook-API",
+								"1.0.0",
+								"book",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create book",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"client_id\": 1234,\r\n  \"client_key\": \"CLIENT01\",\r\n  \"client_secret\": \"SECRET01\",\r\n  \"status\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://virtserver.swaggerhub.com/sepulsa/RentABook-API/1.0.0/book",
+							"protocol": "https",
+							"host": [
+								"virtserver",
+								"swaggerhub",
+								"com"
+							],
+							"path": [
+								"sepulsa",
+								"RentABook-API",
+								"1.0.0",
+								"book"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "put book",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 1234,\r\n  \"title\": \"Judul Buku Satu\",\r\n  \"isbn\": \"1-234-5678-9101112-13\",\r\n  \"writer\": \"Dr. Who\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://virtserver.swaggerhub.com/sepulsa/RentABook-API/1.0.0/book/1",
+							"protocol": "https",
+							"host": [
+								"virtserver",
+								"swaggerhub",
+								"com"
+							],
+							"path": [
+								"sepulsa",
+								"RentABook-API",
+								"1.0.0",
+								"book",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete book",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 1234,\r\n  \"title\": \"Judul Buku Satu\",\r\n  \"isbn\": \"1-234-5678-9101112-13\",\r\n  \"writer\": \"Dr. Who\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://virtserver.swaggerhub.com/sepulsa/RentABook-API/1.0.0/book/1",
+							"protocol": "https",
+							"host": [
+								"virtserver",
+								"swaggerhub",
+								"com"
+							],
+							"path": [
+								"sepulsa",
+								"RentABook-API",
+								"1.0.0",
+								"book",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "binance",
+			"item": [
+				{
+					"name": "Get klines with startTime and endTime",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const ts  = Date.now();\r",
+									"pm.environment.set(\"timestamp\", ts);\r",
+									" \r",
+									"let paramsObject = {};\r",
+									" \r",
+									"const binance_api_secret = pm.environment.get(\"api_secret\");\r",
+									" \r",
+									"const parameters = pm.request.url.query;\r",
+									" \r",
+									"parameters.map((param) => {\r",
+									"    if (param.key != 'signature' && \r",
+									"        param.key != 'timestamp' && \r",
+									"        !is_empty(param.value) &&\r",
+									"        !is_disabled(param.disabled)) {\r",
+									"            paramsObject[param.key] = param.value;\r",
+									"            //console.log(encodeURIComponent(param.value));\r",
+									"            //pm.environment.set(param.key, encodeURIComponent(param.value));\r",
+									"    }\r",
+									"})\r",
+									"        \r",
+									"Object.assign(paramsObject, {'timestamp': ts});\r",
+									" \r",
+									"if (binance_api_secret) {\r",
+									"    const queryString = Object.keys(paramsObject).map((key) => {\r",
+									"        return `${key}=${paramsObject[key]}`;\r",
+									"    }).join('&');\r",
+									"    console.log(queryString);\r",
+									"    const signature = CryptoJS.HmacSHA256(queryString, binance_api_secret).toString();\r",
+									"    pm.environment.set(\"signature\", signature);\r",
+									"}\r",
+									" \r",
+									" \r",
+									"function is_disabled(str) {\r",
+									"    return str == true;\r",
+									"}\r",
+									" \r",
+									"function is_empty(str) {\r",
+									"    if (typeof str == 'undefined' ||\r",
+									"        !str || \r",
+									"        str.length === 0 || \r",
+									"        str === \"\" ||\r",
+									"        !/[^\\s]/.test(str) ||\r",
+									"        /^\\s*$/.test(str) ||\r",
+									"        str.replace(/\\s/g,\"\") === \"\")\r",
+									"    {\r",
+									"        return true;\r",
+									"    }\r",
+									"    else\r",
+									"    {\r",
+									"        return false;\r",
+									"    }\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-MBX-APIKEY",
+								"value": "{{api_key}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://testnet.binance.vision/api/v1/klines?symbol=BTCUSDT&interval=1d&startTime=1661990483000&endTime=1662595199000",
+							"protocol": "https",
+							"host": [
+								"testnet",
+								"binance",
+								"vision"
+							],
+							"path": [
+								"api",
+								"v1",
+								"klines"
+							],
+							"query": [
+								{
+									"key": "symbol",
+									"value": "BTCUSDT"
+								},
+								{
+									"key": "interval",
+									"value": "1d"
+								},
+								{
+									"key": "startTime",
+									"value": "1661990483000"
+								},
+								{
+									"key": "endTime",
+									"value": "1662595199000"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get klines with 1 minute interval",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const ts  = Date.now();\r",
+									"pm.environment.set(\"timestamp\", ts);\r",
+									" \r",
+									"let paramsObject = {};\r",
+									" \r",
+									"const binance_api_secret = pm.environment.get(\"api_secret\");\r",
+									" \r",
+									"const parameters = pm.request.url.query;\r",
+									" \r",
+									"parameters.map((param) => {\r",
+									"    if (param.key != 'signature' && \r",
+									"        param.key != 'timestamp' && \r",
+									"        !is_empty(param.value) &&\r",
+									"        !is_disabled(param.disabled)) {\r",
+									"            paramsObject[param.key] = param.value;\r",
+									"            //console.log(encodeURIComponent(param.value));\r",
+									"            //pm.environment.set(param.key, encodeURIComponent(param.value));\r",
+									"    }\r",
+									"})\r",
+									"        \r",
+									"Object.assign(paramsObject, {'timestamp': ts});\r",
+									" \r",
+									"if (binance_api_secret) {\r",
+									"    const queryString = Object.keys(paramsObject).map((key) => {\r",
+									"        return `${key}=${paramsObject[key]}`;\r",
+									"    }).join('&');\r",
+									"    console.log(queryString);\r",
+									"    const signature = CryptoJS.HmacSHA256(queryString, binance_api_secret).toString();\r",
+									"    pm.environment.set(\"signature\", signature);\r",
+									"}\r",
+									" \r",
+									" \r",
+									"function is_disabled(str) {\r",
+									"    return str == true;\r",
+									"}\r",
+									" \r",
+									"function is_empty(str) {\r",
+									"    if (typeof str == 'undefined' ||\r",
+									"        !str || \r",
+									"        str.length === 0 || \r",
+									"        str === \"\" ||\r",
+									"        !/[^\\s]/.test(str) ||\r",
+									"        /^\\s*$/.test(str) ||\r",
+									"        str.replace(/\\s/g,\"\") === \"\")\r",
+									"    {\r",
+									"        return true;\r",
+									"    }\r",
+									"    else\r",
+									"    {\r",
+									"        return false;\r",
+									"    }\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-MBX-APIKEY",
+								"value": "{{api_key}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://testnet.binance.vision/api/v1/klines?symbol=BTCUSDT&interval=1m",
+							"protocol": "https",
+							"host": [
+								"testnet",
+								"binance",
+								"vision"
+							],
+							"path": [
+								"api",
+								"v1",
+								"klines"
+							],
+							"query": [
+								{
+									"key": "symbol",
+									"value": "BTCUSDT"
+								},
+								{
+									"key": "interval",
+									"value": "1m"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get account information",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const ts  = Date.now();\r",
+									"pm.environment.set(\"timestamp\", ts);\r",
+									" \r",
+									"let paramsObject = {};\r",
+									" \r",
+									"const binance_api_secret = pm.environment.get(\"api_secret\");\r",
+									" \r",
+									"const parameters = pm.request.url.query;\r",
+									" \r",
+									"parameters.map((param) => {\r",
+									"    if (param.key != 'signature' && \r",
+									"        param.key != 'timestamp' && \r",
+									"        !is_empty(param.value) &&\r",
+									"        !is_disabled(param.disabled)) {\r",
+									"            paramsObject[param.key] = param.value;\r",
+									"            //console.log(encodeURIComponent(param.value));\r",
+									"            //pm.environment.set(param.key, encodeURIComponent(param.value));\r",
+									"    }\r",
+									"})\r",
+									"        \r",
+									"Object.assign(paramsObject, {'timestamp': ts});\r",
+									" \r",
+									"if (binance_api_secret) {\r",
+									"    const queryString = Object.keys(paramsObject).map((key) => {\r",
+									"        return `${key}=${paramsObject[key]}`;\r",
+									"    }).join('&');\r",
+									"    console.log(queryString);\r",
+									"    const signature = CryptoJS.HmacSHA256(queryString, binance_api_secret).toString();\r",
+									"    pm.environment.set(\"signature\", signature);\r",
+									"}\r",
+									" \r",
+									" \r",
+									"function is_disabled(str) {\r",
+									"    return str == true;\r",
+									"}\r",
+									" \r",
+									"function is_empty(str) {\r",
+									"    if (typeof str == 'undefined' ||\r",
+									"        !str || \r",
+									"        str.length === 0 || \r",
+									"        str === \"\" ||\r",
+									"        !/[^\\s]/.test(str) ||\r",
+									"        /^\\s*$/.test(str) ||\r",
+									"        str.replace(/\\s/g,\"\") === \"\")\r",
+									"    {\r",
+									"        return true;\r",
+									"    }\r",
+									"    else\r",
+									"    {\r",
+									"        return false;\r",
+									"    }\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-MBX-APIKEY",
+								"value": "{{api_key}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://testnet.binance.vision/api/v3/account?signature={{signature}}&timestamp={{timestamp}}",
+							"protocol": "https",
+							"host": [
+								"testnet",
+								"binance",
+								"vision"
+							],
+							"path": [
+								"api",
+								"v3",
+								"account"
+							],
+							"query": [
+								{
+									"key": "signature",
+									"value": "{{signature}}"
+								},
+								{
+									"key": "timestamp",
+									"value": "{{timestamp}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
