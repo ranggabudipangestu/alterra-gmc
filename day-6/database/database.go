@@ -1,9 +1,9 @@
 package database
 
 import (
-	"os"
 	"sync"
 
+	"github.com/ranggabudipangestu/hexagonal-api/pkg/util"
 	"gorm.io/gorm"
 )
 
@@ -17,11 +17,11 @@ var (
 func CreateConnection() {
 
 	conf := dbConfig{
-		User: os.Getenv("DB_USER"),
-		Pass: os.Getenv("DB_PASS"),
-		Host: os.Getenv("DB_HOST"),
-		Port: os.Getenv("DB_PORT"),
-		Name: os.Getenv("DB_NAME"),
+		User: util.Getenv("DB_USER", "root"),
+		Pass: util.Getenv("DB_PASS", "root"),
+		Host: util.Getenv("DB_HOST", "localhost"),
+		Port: util.Getenv("DB_PORT", "3306"),
+		Name: util.Getenv("DB_NAME", "db-test"),
 	}
 
 	mysql := mysqlConfig{dbConfig: conf}

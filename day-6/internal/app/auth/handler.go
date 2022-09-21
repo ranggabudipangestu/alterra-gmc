@@ -1,4 +1,4 @@
-package user
+package auth
 
 import (
 	"net/http"
@@ -20,8 +20,8 @@ func NewHandler(f *factory.Factory) *handler {
 	}
 }
 
-func (h *handler) FindAll(c echo.Context) error {
-	payload := new(dto.SearchGetRequest)
+func (h *handler) Login(c echo.Context) error {
+	payload := new(dto.RequestLoginDto)
 	if err := c.Bind(payload); err != nil {
 		return response.JSON(c, response.ReturnedData(false, http.StatusInternalServerError, err.Error(), nil))
 	}
@@ -29,13 +29,13 @@ func (h *handler) FindAll(c echo.Context) error {
 		return response.JSON(c, response.ReturnedData(false, http.StatusInternalServerError, err.Error(), nil))
 	}
 
-	res := h.service.Find(c.Request().Context(), payload)
+	res := h.service.Login(c.Request().Context(), payload)
 
 	return response.JSON(c, res)
 }
 
-func (h *handler) FindById(c echo.Context) error {
-	payload := new(dto.ByIDRequest)
+func (h *handler) Register(c echo.Context) error {
+	payload := new(dto.RequestRegisterDto)
 	if err := c.Bind(payload); err != nil {
 		return response.JSON(c, response.ReturnedData(false, http.StatusInternalServerError, err.Error(), nil))
 	}
@@ -43,7 +43,7 @@ func (h *handler) FindById(c echo.Context) error {
 		return response.JSON(c, response.ReturnedData(false, http.StatusInternalServerError, err.Error(), nil))
 	}
 
-	res := h.service.FindByID(c.Request().Context(), payload)
+	res := h.service.Register(c.Request().Context(), payload)
 
 	return response.JSON(c, res)
 }

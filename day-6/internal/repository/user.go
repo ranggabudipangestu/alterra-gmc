@@ -12,8 +12,7 @@ import (
 type User interface {
 	FindAll(ctx context.Context, payload *dto.SearchGetRequest, p *dto.Pagination) ([]dto.ResponseUserDto, *dto.PaginationInfo, error)
 	FindByID(ctx context.Context, id uint) (model.User, error)
-	FindByEmail(ctx context.Context, email *string) (*model.User, error)
-	Login(ctx context.Context, data *dto.RequestLoginDto) error
+	FindByEmail(ctx context.Context, email *string, username *string) (*model.User, error)
 	Register(ctx context.Context, data *dto.RequestRegisterDto) error
 }
 
@@ -57,19 +56,27 @@ func (r *user) FindByID(ctx context.Context, id uint) (model.User, error) {
 	return user, err
 }
 
-func (r *user) FindByEmail(ctx context.Context, email *string) (*model.User, error) {
+func (r *user) FindByEmail(ctx context.Context, email *string, username *string) (*model.User, error) {
 	conn := r.Db.WithContext(ctx)
 
 	var user model.User
-	err := conn.Model(&model.User{}).Where("email = ?", email).First(&user).Error
+	err := conn.Model(&model.User{}).Where("email = ? OR username= ?", email, username).First(&user).Error
 	if err != nil {
 		return nil, err
 	}
 	return &user, nil
 }
 
-func (r *user) Register(ctx context.Context, payload *dto.RequestRegisterDto) error {
-	if err := r.Db.Model(&model.User{}).Create(payload).Error; err != nil {
+func (r *user) Register(ctx context.Context, data *dto.RequestRegisterDto) error {
+	tx := r.Db.WithContext(ctx).Create(&model.User{
+		Name:     data.Name,
+		Email:    data.Email,
+		Username: data.Username,
+		Password: data.Password,
+	})
+	err := tx.Error
+
+	if err != nil {
 		return err
 	}
 	return nil
