@@ -5,6 +5,6 @@ import (
 )
 
 func (h *handler) Route(g *echo.Group) {
-	g.POST("/users", h.FindAll)
-	g.POST("/user/:id", h.FindById)
+	g.GET("/users", h.FindAll)
+	g.GET("/user/:id", h.FindById)
 }

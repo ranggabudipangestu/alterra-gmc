@@ -15,8 +15,8 @@ type SearchGetRequest struct {
 }
 
 type SearchGetResponse[T any] struct {
-	Datas          []T `json:"data"`
-	PaginationInfo PaginationInfo
+	Datas          []T            `json:"rows"`
+	PaginationInfo PaginationInfo `json:"paginationInfo"`
 }
 
 type PaginationInfo struct {
