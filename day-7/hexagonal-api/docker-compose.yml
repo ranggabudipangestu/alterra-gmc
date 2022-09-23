@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+    alterra-agmc:
+        container_name: alterra-agmc #
+        image: ranggabp12/alterra-agmc:1.0.0
+        ports:
+            - 5000:5000
+        environment:
+            - APP_PORT=5000
+            - DB_HOST=localhost
+            - DB_NAME=alterra-gmc
+            - DB_PASS=root
+            - DB_PORT=3306
+            - DB_USER=root
+            - JWT_SECRET=randomcharactershere
+        networks: 
+            - alterra-agmc-network
+
+networks:
+    alterra-agmc-network:
+        name: alterra-agmc-network
